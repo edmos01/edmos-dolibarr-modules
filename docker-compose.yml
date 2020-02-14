@@ -21,7 +21,7 @@ services:
     edmos_dolibarr:
         container_name: sgm-erp
         build: .
-        image: sgm-erp:latest
+        image: edmos-sgm-erp:latest
         restart: always
         ports:
             - 80:80
