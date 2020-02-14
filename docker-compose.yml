@@ -19,9 +19,9 @@ services:
             - dolibarr_db:/var/lib/mysql
 
     edmos_dolibarr:
-        container_name: edmos-dolibarr
+        container_name: sgm-erp
         build: .
-        image: edmos01/edmos-dolibarr:latest
+        image: sgm-erp:latest
         restart: always
         ports:
             - 80:80
