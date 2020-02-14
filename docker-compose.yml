@@ -1,0 +1,52 @@
+version: '3.1'
+
+services:
+    edmos_db:
+        container_name: edmos-db
+        image: mariadb:latest
+        restart: always
+        command: --character_set_client=utf8 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --character-set-client-handshake=FALSE
+        ports:
+            - 3306:3306
+        networks:
+            - default
+        environment: 
+            MYSQL_DATABASE: edmos_dolibarr_db
+            MYSQL_USER: edmoserp
+            MYSQL_PASSWORD: edmos_dolibarr@2020
+            MYSQL_ROOT_PASSWORD: admin@123
+        volumes: 
+            - dolibarr_db:/var/lib/mysql
+
+    edmos_dolibarr:
+        container_name: edmos-dolibarr
+        build: .
+        image: edmos01/edmos-dolibarr:latest
+        restart: always
+        ports:
+            - 80:80
+        networks:
+            - default
+        environment: 
+            DOLI_DB_HOST: edmos_db 
+            DOLI_DB_USER: edmoserp
+            DOLI_DB_PASSWORD: edmos_dolibarr@2020
+            DOLI_DB_NAME: edmos_dolibarr_db
+            DOLI_DB_ROOT_LOGIN: root
+            DOLI_DB_ROOT_PASSWORD: admin@123
+            PHP_INI_DATE_TIMEZONE: 'America/Sao_Paulo'
+        depends_on:
+            - edmos_db
+        volumes: 
+            - dolibarr_html:/var/www/html
+            - dolibarr_docs:/var/www/documents
+            - dolibarr_scripts:/var/www/scripts
+
+networks:
+    default:
+
+volumes: 
+    dolibarr_html:
+    dolibarr_docs:
+    dolibarr_scripts:
+    dolibarr_db:
