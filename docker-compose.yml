@@ -27,7 +27,8 @@ services:
             - 80:80
         networks:
             - default
-        environment: 
+        environment:
+            DOLI_VERSION: 12.0.0
             DOLI_DB_HOST: edmos_db 
             DOLI_DB_USER: edmoserp
             DOLI_DB_PASSWORD: edmos_dolibarr@2020
